@@ -1,0 +1,129 @@
+<!DOCTYPE html> 
+<html>
+<head>
+  <title>APP JavaScript and the DOM </title>
+  <meta name="description" content="website description" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  <link rel="stylesheet" type="text/css" href="css/style.css" 
+  <!-- modernizr enables HTML5 elements and feature detects -->
+  <script type="text/javascript" src="js/modernizr-1.5.min.js"></script>
+
+  <link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.20.0.css">
+  <link rel="stylesheet" href="css/c05.css">
+  <script src="js/qunit-1.21.0.js"></script>
+  <script src="js/labtask.js"></script>
+</head>
+<body>
+	<div id="main">		
+		<header>  
+			<div id="banner">
+				<div id="welcome">
+					<h3>Application of Programming Principles <span>JavaScript and the DOM</span></h3>
+				</div><!--close welcome-->		
+			</div><!--close banner-->
+		</header>
+		<div id="site_content">		
+			<div id="strapline">
+				<div id="welcome_slogan">
+					<h3>Unit Test Your JavaScript</h3>
+				</div><!--close welcome_slogan-->
+			</div><!--close strapline--> 
+			<div id="content">
+				<div class="content_item">
+					<h1>Edit the labtask.js file into the js directory and this page will unit test your JavaScript functions</h1> 
+					<div class="content_container">
+						<div  id="qunit"><p>QUnit will write into this div</p></div>
+					</div><!--close content_container-->
+				</div><!--close content_item-->
+			</div><!--close content-->   
+		</div><!--close site_content-->  	
+		<!-- effected page elements below --> 
+		<div id="page">
+			<h1></h1>
+			<h2>Buy groceries</h2>
+			<ul id="groceries">
+				<li id="one" class="hot"><em>fresh</em> figs</li>
+				<li id="two" class="hot">pine nuts</li>
+				<li id="three" class="hot">honey</li>
+				<li id="four" class="cold">balsamic vinegar</li>
+				<li id="five" class="cold">yoghurt coated banana chips</li>
+			</ul>
+		</div><!--close page--> 
+		<footer>
+			The list example above is adapted from an example in code from <a href="http://javascriptbook.com/" target="_blank">http://javascriptbook.com/</a>
+		</footer>
+	</div><!--close main-->
+	<script>
+	
+		QUnit.test( "changeClass - id 1 to cold", function( assert ) {
+			changeClass('one','cold')
+			assert.equal(document.getElementById('one').className, 'cold');
+			assert.equal(document.getElementById('two').className, 'hot');
+			assert.equal(document.getElementById('three').className, 'hot');
+			assert.equal(document.getElementById('four').className, 'cold');
+			assert.equal(document.getElementById('five').className, 'cold');
+		});
+
+		QUnit.test( "changeClass - id 4 to hot", function( assert ) {
+			changeClass('four','hot')
+			assert.equal(document.getElementById('one').className, 'cold' );
+			assert.equal(document.getElementById('two').className, 'hot');
+			assert.equal(document.getElementById('three').className, 'hot');
+			assert.equal(document.getElementById('four').className, 'hot');
+			assert.equal(document.getElementById('five').className, 'cold');
+		});
+		
+		QUnit.test( "Get the number of Hot items", function( assert ) {
+			var countHot = getHotItems();
+			var passedTest = false;
+			if (countHot==2 || countHot==4)
+			{
+				passedTest = true;
+			}
+			var message = "There should be 4 or 2 hot items on the list (It depends on how many times you have run the swap items function). However, you had "+countHot+". ";
+			assert.equal(passedTest, true, message );
+		});	
+			
+		QUnit.test( "Swap groceries list classes hot to cold and visa versa", function( assert ) {
+			swapClass();
+			assert.equal(document.getElementById('one').className, 'hot');
+			assert.equal(document.getElementById('two').className, 'cold');
+			assert.equal(document.getElementById('three').className, 'cold');
+			assert.equal(document.getElementById('four').className, 'cold');
+			assert.equal(document.getElementById('five').className, 'hot');
+		});
+		
+					
+		QUnit.test( "Add a list item called lemon curd to a passed list", function( assert ) {
+			//get current list length
+			var currentLength = document.getElementById('groceries').getElementsByTagName('li').length;
+			//add item 
+			appendItem(document.getElementById('groceries'), 'lemon curd')
+			assert.equal(document.getElementById('groceries').getElementsByTagName('li').length, (currentLength + 1));
+			assert.equal(document.getElementById('groceries').lastChild.innerHTML, 'lemon curd', 'New item should be: lemon curd');
+		});
+			
+		QUnit.test( "Add a list item called strawberry jam to a passed list", function( assert ) {
+			//get current list length
+			var currentLength = document.getElementById('groceries').getElementsByTagName('li').length;
+			//add item 
+			appendItem(document.getElementById('groceries'), 'strawberry jam')
+			assert.equal(document.getElementById('groceries').getElementsByTagName('li').length, (currentLength + 1));
+			assert.equal(document.getElementById('groceries').lastChild.innerHTML, 'strawberry jam','New item should be: strawberry jam');
+		});
+			
+		QUnit.test( "Update innHTML of li elements to include a list number", function( assert ) {
+			swapInnerHTML(document.getElementById('groceries'))
+			assert.equal(document.getElementById('one').innerHTML, '1. <em>fresh</em> figs');
+			assert.equal(document.getElementById('two').innerHTML, '2. pine nuts');
+			assert.equal(document.getElementById('three').innerHTML, '3. honey');
+			assert.equal(document.getElementById('four').innerHTML, '4. balsamic vinegar');
+			assert.equal(document.getElementById('five').innerHTML, '5. yoghurt coated banana chips');
+		});
+
+	</script>
+	<!-- javascript at the bottom for fast page loading -->
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+</body>
+</html>
